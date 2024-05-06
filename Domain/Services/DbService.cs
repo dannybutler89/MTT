@@ -3,8 +3,8 @@ using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Helpers;
 using FluentValidation;
-using Models;
 using Models.Request;
+using Models.Response;
 
 namespace Domain.Services
 {
