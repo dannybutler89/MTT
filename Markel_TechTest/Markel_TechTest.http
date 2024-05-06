@@ -1,0 +1,6 @@
+@Markel_TechTest_HostAddress = http://localhost:5015
+
+GET {{Markel_TechTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
