@@ -23,7 +23,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> CompanyById([FromRoute] int companyId, CancellationToken ct)
         {
-            return Ok(await _dbService.CompanyById(companyId, ct));
+            return Ok(await _dbService.CompanyById(new CompanySearchRequest(companyId), ct));
         }
 
         [HttpGet("claims/{companyId}")]
@@ -34,7 +34,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> ClaimsByCompanyId([FromRoute] int companyId, CancellationToken ct)
         {
-            return Ok(await _dbService.ClaimsByCompanyId(companyId, ct));
+            return Ok(await _dbService.ClaimsByCompanyId(new CompanySearchRequest(companyId), ct));
         }
 
         [HttpGet("claim/{claimId}")]
@@ -45,7 +45,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> ClaimById([FromRoute] int claimId, CancellationToken ct)
         {
-            return Ok(await _dbService.ClaimById(claimId, ct));
+            return Ok(await _dbService.ClaimById(new ClaimSearchRequest(claimId), ct));
         }
 
         [HttpPatch("claims")]

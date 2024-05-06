@@ -13,23 +13,29 @@ namespace Domain.Services
         private readonly DateHelper _dateHelper;
         private readonly IMapper _mapper;
         private readonly IDbRepository _repository;
-        private readonly IValidator<UpdateClaimRequest> _validator;
+        private readonly IValidator<UpdateClaimRequest> _updateValidator;
+        private readonly IValidator<CompanySearchRequest> _companySearchValidator;
+        private readonly IValidator<ClaimSearchRequest> _claimSearchValidator;
 
-        public DbService(DateHelper dateHelper, IMapper mapper, IDbRepository repository, IValidator<UpdateClaimRequest> validator)
+        public DbService(DateHelper dateHelper, IMapper mapper, IDbRepository repository, IValidator<UpdateClaimRequest> updateValidator, IValidator<CompanySearchRequest> companyRequestValidator, IValidator<ClaimSearchRequest> claimRequestValidator)
         {
             _dateHelper = dateHelper;
             _mapper = mapper;
             _repository = repository;
-            _validator = validator;
+            _updateValidator = updateValidator;
+            _companySearchValidator = companyRequestValidator;
+            _claimSearchValidator = claimRequestValidator;
         }
 
-        public async Task<ClaimResponse> ClaimById(int claimId, CancellationToken ct)
+        public async Task<ClaimResponse> ClaimById(ClaimSearchRequest request, CancellationToken ct)
         {
-            var claim = await _repository.FindClaimById(claimId, ct);
+            await _claimSearchValidator.ValidateAndThrowAsync(request);
+
+            var claim = await _repository.FindClaimById(request.ClaimId, ct);
 
             if (claim is null)
             {
-                throw new NotFoundException(nameof(claim), claimId);
+                throw new NotFoundException(nameof(claim), request.ClaimId);
             }
 
             var response = _mapper.Map<ClaimResponse>(claim);
@@ -39,13 +45,15 @@ namespace Domain.Services
             return response;
         }
 
-        public async Task<IEnumerable<ClaimResponse>> ClaimsByCompanyId(int companyId, CancellationToken ct)
+        public async Task<IEnumerable<ClaimResponse>> ClaimsByCompanyId(CompanySearchRequest request, CancellationToken ct)
         {
-            var claims = await _repository.SearchClaimsByCompanyId(companyId, ct);
+            await _companySearchValidator.ValidateAndThrowAsync(request);
+
+            var claims = await _repository.SearchClaimsByCompanyId(request.CompanyId, ct);
 
             if (claims is null)
             {
-                throw new NotFoundException(nameof(CompanyById), companyId);
+                throw new NotFoundException(nameof(CompanyById), request.CompanyId);
             }
 
             var response = _mapper.Map<IEnumerable<ClaimResponse>>(claims);
@@ -58,13 +66,15 @@ namespace Domain.Services
             return response;
         }
 
-        public async Task<CompanyResponse> CompanyById(int companyId, CancellationToken ct)
+        public async Task<CompanyResponse> CompanyById(CompanySearchRequest request, CancellationToken ct)
         {
-            var company = await _repository.FindCompanyById(companyId, ct);
+            await _companySearchValidator.ValidateAndThrowAsync(request);
+
+            var company = await _repository.FindCompanyById(request.CompanyId, ct);
 
             if (company is null)
             {
-                throw new NotFoundException(nameof(Company), companyId);
+                throw new NotFoundException(nameof(Company), request.CompanyId);
             }
 
             var response = _mapper.Map<CompanyResponse>(company);
@@ -76,7 +86,7 @@ namespace Domain.Services
 
         public async Task<ClaimResponse> UpdateClaim(UpdateClaimRequest request, CancellationToken ct)
         {
-            _validator.ValidateAndThrow(request);
+            await _updateValidator.ValidateAndThrowAsync(request);
 
             var claim = await _repository.FindClaimById(request.Id, ct);
 
