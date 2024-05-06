@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Helpers;
 using FluentValidation;
 using Models;
@@ -6,7 +8,6 @@ using Models.Request;
 
 namespace Domain.Services
 {
-    //TODO: Error handling
     public class DbService : IDbService
     {
         private readonly DateHelper _dateHelper;
@@ -28,7 +29,7 @@ namespace Domain.Services
 
             if (claim is null)
             {
-                throw new KeyNotFoundException($"No claim found for Id {claimId}");
+                throw new NotFoundException(nameof(claim), claimId);
             }
 
             var response = _mapper.Map<ClaimResponse>(claim);
@@ -44,7 +45,7 @@ namespace Domain.Services
 
             if (claims is null)
             {
-                throw new KeyNotFoundException($"No company found for Id {companyId}");
+                throw new NotFoundException(nameof(CompanyById), companyId);
             }
 
             var response = _mapper.Map<IEnumerable<ClaimResponse>>(claims);
@@ -63,7 +64,7 @@ namespace Domain.Services
 
             if (company is null)
             {
-                throw new KeyNotFoundException($"No company found for Id {companyId}");
+                throw new NotFoundException(nameof(Company), companyId);
             }
 
             var response = _mapper.Map<CompanyResponse>(company);
@@ -81,7 +82,7 @@ namespace Domain.Services
 
             if (claim is null)
             {
-                throw new KeyNotFoundException($"No claim found for Id {request.Id}, update failed");
+                throw new NotFoundException(nameof(Claim), request.Id);
             }
 
             _mapper.Map(request, claim);

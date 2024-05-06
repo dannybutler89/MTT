@@ -19,6 +19,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> CompanyById([FromRoute] int companyId, CancellationToken ct)
         {
@@ -29,6 +30,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> ClaimsByCompanyId([FromRoute] int companyId, CancellationToken ct)
         {
@@ -39,6 +41,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> ClaimById([FromRoute] int claimId, CancellationToken ct)
         {
@@ -49,6 +52,7 @@ namespace Markel_TechTest.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> UpdateClaim([FromBody] UpdateClaimRequest request, CancellationToken ct)
         {

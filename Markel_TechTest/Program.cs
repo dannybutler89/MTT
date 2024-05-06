@@ -27,7 +27,6 @@ var services = scoped.ServiceProvider;
 var dbContext = services.GetRequiredService<MarkelDbContext>();
 await DataInitializer.Initialize(dbContext);
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
