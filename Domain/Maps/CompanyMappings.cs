@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
-using Models;
+using Models.Response;
 
 namespace Domain.Maps
 {

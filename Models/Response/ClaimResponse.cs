@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace Models.Response
 {
     public class ClaimResponse
     {

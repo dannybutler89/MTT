@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
-using Models;
 using Models.Request;
+using Models.Response;
 namespace Domain.Maps
 {
     public class ClaimMappings : Profile

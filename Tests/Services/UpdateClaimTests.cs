@@ -5,8 +5,8 @@ using Domain.Services;
 using Domain.Validation;
 using FluentAssertions;
 using FluentValidation;
-using Models;
 using Models.Request;
+using Models.Response;
 using NSubstitute;
 using Xunit;
 
